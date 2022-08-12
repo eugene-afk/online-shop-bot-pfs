@@ -1,0 +1,5 @@
+CREATE DATABASE IF NOT EXISTS `osb`;
+
+CREATE USER 'osb'@'%' IDENTIFIED WITH mysql_native_password BY 'PEVqB528w0';
+
+GRANT ALL PRIVILEGES ON osb.* TO 'osb'@'%';

@@ -1,0 +1,52 @@
+version: '3.9'
+services:
+
+  db:
+    image: mysql
+    command: --default-authentication-plugin=mysql_native_password
+    ports:
+      - 6163:3306
+    volumes:
+      - ./data/mysql/data:/var/lib/mysql
+      - ./data/mysql/init:/docker-entrypoint-initdb.d
+    restart: unless-stopped
+    environment:
+      MYSQL_ROOT_PASSWORD: 7R8f2Qnx3M
+    healthcheck:
+      test: ["CMD", "mysqladmin" ,"ping", "-h", "localhost", "-uroot", "-ppass"]
+      timeout: 20s
+      retries: 10
+
+  online-shop-bot-backend:
+    build:
+      dockerfile: Dockerfile
+      context: ./backend
+    container_name: online-shop-bot-backend
+    restart: unless-stopped
+    depends_on:
+      db:
+        condition: service_healthy
+    environment:
+      - DB_HOST=db # database host, if your running with docker-compose it may be container name, in another way it needs to be address in format: 127.0.0.1:3306
+      - DB_PASSWORD=PEVqB528w0 # password from app database user (.../data/mysql/init/database.sql)
+      - TELEGRAM_WEB_APP_URL=https://domain.com # url to telegram web app (without trailing slash)
+      - DB_NAME=osb # app database name (.../data/mysql/init/database.sql)
+      - DB_USER=osb # app database username (.../data/mysql/init/database.sql)
+      - TELEGRAM_PAYMENTS_PROVIDER_TOKEN=12345:test:qwerty # telegram payments token
+      - TELEGRAM_API_TOKEN=12345:qwerty # teelgram bot token
+      - TELEGRAM_ADMINS=00000, # id's of telegram users that will be admins (trailing comma (,) is necessary)
+    volumes:
+        - ./data/logs:/code/server/logs
+    ports:
+      - 5050:5000
+
+  online-shop-bot-frontend:
+    build:
+      dockerfile: Dockerfile
+      context: ./web
+      args: 
+        - api_url=https://<domain/ip-address>:5050/ # url to backend rest service (online-shop-bot-backend container), trailing slash is necessary
+    container_name: online-shop-bot-frontend
+    restart: unless-stopped
+    ports:
+      - 3030:3000

@@ -1,0 +1,12 @@
+envparse
+aiogram
+fastapi
+uvicorn
+pydantic
+sqlalchemy
+manage.py
+aiomysql
+pytest
+pytest-asyncio
+requests
+XlsxWriter

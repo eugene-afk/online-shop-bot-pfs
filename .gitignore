@@ -1,0 +1,16 @@
+backend/logs/*.*
+!backend/logs/.gitkeep
+backend/static/*.*
+!backend/static/.gitkeep
+
+data/mysql/data/*
+!data/mysql/data/.gitkeep
+data/logs/*
+!data/logs/.gitkeep
+
+backend/tests/*.*
+backend/test_database.py
+data/mysql/prod-init
+prod-docker-compose.yml
+
+

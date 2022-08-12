@@ -1,0 +1,24 @@
+body {
+  margin: 0;
+  font-family: Roboto, Helvetica, Arial, sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+.main {
+  padding-top: 78px;
+  padding-bottom: 78px;
+}
+
+code {
+  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
+    monospace;
+}
+
+select{
+  height: 36px;
+}
+
+.responsive-x{
+  overflow-x: auto;
+}
